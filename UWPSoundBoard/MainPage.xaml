@@ -16,16 +16,27 @@
         </Grid.RowDefinitions>
         <RelativePanel>
             <Button Content="&#xE700;" RelativePanel.AlignLeftWithPanel="True"
-                    FontFamily="Segoe MDL2 Assets" Width="45" Name="HamburgerButton" />
+                    FontFamily="Segoe MDL2 Assets" Width="45" Name="HamburgerButton" Click="HamburgerButton_Click" />
             <Button Content="&#xE0A6;" RelativePanel.RightOf="HamburgerButton"
-                    FontFamily="Segoe MDL2 Assets" Width="45" Name="BackButton" />
+                    FontFamily="Segoe MDL2 Assets" Width="45" Name="BackButton" Click="BackButton_Click" />
         </RelativePanel>
         <SplitView Grid.Row="1" Name="MySplitView"
                    DisplayMode="CompactOverlay"
                    CompactPaneLength="45"
                    OpenPaneLength="200">
             <SplitView.Pane>
-                <ListView Name="MenuItemsListView" IsItemClickEnabled="True">
+                <ListView Name="MenuItemsListView" 
+                          IsItemClickEnabled="True"
+                          ItemsSource="{x:Bind menuItems}"
+                          ItemClick="MenuItemsListView_ItemClick">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="data:MenuItem">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{x:Bind IconFile}" Height="35" Width="35" Margin="-8,10,0,10" />
+                                <TextBlock Text="{x:Bind Category}" FontSize="18" Margin="10,15,0,0" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                     
                 </ListView>
             </SplitView.Pane>
@@ -41,7 +52,8 @@
                               Name="SoundGridView"
                               ItemsSource="{x:Bind sounds}"
                               IsItemClickEnabled="True"
-                              SelectionMode="None">
+                              SelectionMode="None"
+                              ItemClick="SoundGridView_ItemClick">
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="data:Sound">
                                 <Image Name="MyImage" Height="112" Width="101" Source="{x:Bind ImageFile}" />
